@@ -1,0 +1,888 @@
+#symbols_start
+DeltaTeos = 2*(thick_teos/cos(wg_Angle))
+ModeName = MODE/TEMODE_ex.m00
+Monitor = MONITOR_FILE_POWER
+Offset_H_BPSG_as_dep = 1
+Si_h = 9
+T = 0
+TaperName = TaperFile/Taper.txt
+alpha = 0
+background_alpha = nimag($background_material)
+background_index = nreal($background_material)
+background_index_local = 1.445
+background_material = Air
+boundary_max = 15
+boundary_max_y = 12
+boundary_min = -15
+boundary_min_y = -13
+cad_xselect_pos = 4.3
+cad_yselect_pos = 0
+cad_zselect_pos = 6
+cad_zselect_size = 1
+delta = index-background_index
+dimension = 3
+domain_max = wg_length
+domain_min = 0
+eim = 0
+free_space_wavelength = lambda0
+grid_size = 0.05
+grid_size_y = 0.05
+heater_height = 0.15
+heater_width = 2
+height = wgh
+index = 1.4682
+index_max = 1.465
+index_min = 1.42
+k0 = (2*pi)/free_space_wavelength
+l = wg_length
+lambda0 = 1.545
+launch_background_index = 1
+launch_file = MODE/ModeTEW_0.5_ex.m00
+launch_height = 13.6
+launch_normalization = 2
+launch_position = 0
+launch_position_y = -0.8
+launch_width = 13.6
+mode_length = wg_length
+mode_method = 0
+modecalc_display_mode = DISPLAY_CONTOURMAPXY
+n_BPSG_as_dep = sqrt(0.1826683+1.942621*(lambda0*1e9)^2/((lambda0*1e9)^2-(71.04418)^2))
+n_BPSG_reflown = sqrt(0.809925+1.272716*(lambda0*1e9)^2/((lambda0*1e9)^2-(88.696500)^2))
+neff_tol = 1e-08
+polarization = 0
+sim_tool = ST_BEAMPROP
+slice_display_mode = DISPLAY_CONTOURMAPXZ
+step_size = 0.2
+step_size_idbpm = 0.2
+structure = STRUCT_CHANNEL
+thick1_bpsg_reflown = 1
+thick2_bpsg_reflown = 2
+thick_pecvd = 0.5
+thick_substrate = 5
+thick_teos = 0.4
+thick_teos_asdep = 2.7
+transition_layer_height = 0.2
+vector = 1
+wg2 = 0.45
+wg_Angle = 2
+wg_Offset_width = 0
+wg_length = 345
+wgh = 2.2
+width = 0.4
+width_substrate = 15*2
+mode_set = None
+#symbols_end
+
+material 1
+	name = Air
+	origin = Path=/RSoft/Dielectrics/Air Date
+	optical
+		nr = 1
+	end optical
+	thermo_optic
+		kappa_xx = 0.1*1e-6
+		kappa_yy = 0.1*1e-6
+		kappa_zz = 0.1*1e-6
+	end thermo_optic
+	semiconductor
+		elem_matfile = Oxide.mat
+		reg_regtype = oxide
+	end semiconductor
+end material
+
+material 2
+	name = BPSG_AsDep_Sellmeier
+	origin = Path=/Group/FBK/BPSG_AsDep_Sellmeier Date=11/09/2020 Time=11:22
+	optical
+		dispersive = 1
+		nr = 1.445
+	end optical
+	epsinf = 0.1826683
+	num_dsp = 1
+	delta_1 = 15194.6536
+	a_1 = 1
+	b_1 = 0
+	c_1 = 7821.7282
+	thermo_optic
+		kappa_xx = 1.38*1e-6
+		kappa_yy = 1.38*1e-6
+		kappa_zz = 1.38*1e-6
+		r = 0.95*10^-5
+	end thermo_optic
+end material
+
+material 3
+	name = BPSG_Reflow_Sellmeier
+	origin = Path=/Group/FBK/BPSG_Reflow_Sellmeier Date=11/09/2020 Time=11:22
+	optical
+		dispersive = 1
+		nr = 1.445
+	end optical
+	epsinf = 0.809925
+	num_dsp = 1
+	delta_1 = 6386.7258
+	a_1 = 1
+	b_1 = 0
+	c_1 = 5018.1861
+	thermo_optic
+		kappa_xx = 1.38*1e-6
+		kappa_yy = 1.38*1e-6
+		kappa_zz = 1.38*1e-6
+		r = 0.95*10^-5
+	end thermo_optic
+end material
+
+material 4
+	name = Si
+	origin = Path=/RSoft/Semiconductors/Si Date=08/30/2019 Time=12:00
+	comment = Lambda_Min=6.199e-4, Lambda_Max=10, Src=RSoft-Mixed
+	optical
+		ni = userimag("<rsoftmat>\Si_nk.dat",free_space_wavelength)
+		nr = userreal("<rsoftmat>\Si_nk.dat",free_space_wavelength)
+	end optical
+	electro_optic
+		eps_xx = 11.8
+		eps_yy = 11.8
+		eps_zz = 11.8
+	end electro_optic
+	thermo_optic
+		kappa_xx = 150*1e-6
+		kappa_yy = 150*1e-6
+		kappa_zz = 150*1e-6
+		r = 0.00024
+	end thermo_optic
+	stress_optic
+		E = 130
+		alpha = 3.6e-06
+		nu = 0.27
+		p1 = -0.101
+		p2 = 0.0094
+	end stress_optic
+	semiconductor
+		elem_matfile = Si.mat
+	end semiconductor
+end material
+
+material 5
+	name = SiO2_PECVD_Sellmeier
+	origin = Path=/Group/FBK/SiO2_PECVD_Sellmeier Date=11/05/2020 Time=12:52
+	optical
+		dispersive = 1
+		nr = 1.445
+	end optical
+	epsinf = -5.884
+	num_dsp = 1
+	delta_1 = 227066.6566
+	a_1 = 1
+	b_1 = 0
+	c_1 = 28284.3369
+	thermo_optic
+		kappa_xx = 1.38*1e-6
+		kappa_yy = 1.38*1e-6
+		kappa_zz = 1.38*1e-6
+		r = 0.95*10^-5
+	end thermo_optic
+end material
+
+material 6
+	name = SiO2_TEOS_Sellmeier
+	origin = Path=/Group/FBK/SiO2_TEOS_Sellmeier Date=11/09/2020 Time=11:22
+	optical
+		dispersive = 1
+		nr = 1.4345
+	end optical
+	epsinf = 0.768
+	num_dsp = 1
+	delta_1 = 6752.465
+	a_1 = 1
+	b_1 = 0
+	c_1 = 5250.75
+	thermo_optic
+		kappa_xx = 1.38*1e-6
+		kappa_yy = 1.38*1e-6
+		kappa_zz = 1.38*1e-6
+		r = 0.95*10^-5
+	end thermo_optic
+end material
+
+material 7
+	name = SiON_Ann8_Sellmeier
+	origin = Path=/Group/FBK/SiON_Ann8_Sellme
+	optical
+		dispersive = 1
+		nr = 1.445
+	end optical
+	epsinf = -0.202
+	num_dsp = 1
+	delta_1 = 5681.24675
+	a_1 = 1
+	b_1 = 0
+	c_1 = 2254.463
+	thermo_optic
+		kappa_xx = 1.38*1e-6
+		kappa_yy = 1.38*1e-6
+		kappa_zz = 1.38*1e-6
+		r = 0.95*10^-5
+	end thermo_optic
+end material
+
+material 8
+	name = SiON_NEW_Ann4_Sellmeier
+	origin = Path=/Group/FBK/SiON_NEW_Ann4_Sellmeier Date=02/12/2021 Time=10:32
+	optical
+		dispersive = 1
+		inputmode = 1
+	end optical
+	epsinf = 0.0925251
+	num_dsp = 1
+	delta_1 = 9785.82977
+	a_1 = 1
+	b_1 = 0
+	c_1 = 4505.76181
+end material
+
+material 9
+	name = SiON_Polifab_Ann4_Sellmeier
+	origin = Path=/Group/FBK/SiON_Polifab_Ann4_Sellmeier Date=06/07/2021 Time=16:26
+	optical
+		dispersive = 1
+		inputmode = 1
+	end optical
+	epsinf = -3.443
+	num_dsp = 1
+	delta_1 = 29730.04
+	a_1 = 1
+	b_1 = 0
+	c_1 = 5168.644
+end material
+
+material 10
+	name = TEOS_AsDep
+	origin = Path=/Group/FBK/TEOS_AsDep Date=12/02/2020 Time=11:51
+	comment = Lambda_Min=0.9, Lambda_Max=1.7, Src=ElenaLaMagnifica
+	optical
+		ni = userimag("<groupmat>\TEOS_asDep.txt",free_space_wavelength)
+		nr = userreal("<groupmat>\TEOS_asDep.txt",free_space_wavelength)
+	end optical
+end material
+
+material 11
+	name = ThermalOxide_Sellmeier
+	origin = Path=/Group/FBK/ThermalOxide_Sellmeier Date=11/09/2020 Time=11:22
+	optical
+		dispersive = 1
+		nr = 1.445
+	end optical
+	epsinf = -9.836
+	num_dsp = 1
+	delta_1 = 166422.0755
+	a_1 = 1
+	b_1 = 0
+	c_1 = 13969.78725
+	thermo_optic
+		kappa_xx = 1.38*1e-6
+		kappa_yy = 1.38*1e-6
+		kappa_zz = 1.38*1e-6
+		r = 0.95*10^-5
+	end thermo_optic
+end material
+
+material 12
+	name = TiN
+	origin = Path=/Group/FBK/TiN Date=11/06/2020 Time=16:33
+	optical
+		ni = 5.84
+		nr = 3
+	end optical
+end material
+
+
+user_taper 1
+	type = UF_DATAFILE
+	filename = $TaperName
+end user_taper
+
+
+segment 1
+	combine_mode = COMBINE_MERGE
+	priority = 4
+	draw_priority = 12
+	color = 12
+	sidewall_angle = wg_Angle
+	tags = Group=3
+	extended = 1
+	width_taper = TAPER_USER_1
+	arc_type = ARC_SBEND
+	begin.x = 0
+	begin.z = 0
+	begin.height = wgh
+	begin.width = 0
+	begin.delta = 1.505-background_index
+	end.x = 0 rel begin segment 1
+	end.y = 0 rel begin segment 1
+	end.z = wg_length rel begin segment 1
+	end.height = wgh
+	end.width = 1
+	end.delta = 1.505-background_index
+	mat_name = SiON_Polifab_Ann4_Sellmeier
+end segment
+
+segment 2
+	priority = 2
+	draw_priority = 3
+	color = 4
+	tags = Group=3
+	extended = 1
+	arc_type = ARC_SBEND
+	begin.x = 0 rel begin segment 1
+	begin.y = -thick_substrate/2-wgh/2 rel begin segment 1
+	begin.z = 0
+	begin.height = thick_substrate
+	begin.width = width_substrate
+	begin.delta = 1.445-background_index
+	end.x = 0 rel begin segment 2
+	end.y = 0 rel begin segment 2
+	end.z = wg_length rel begin segment 2
+	end.height = thick_substrate
+	end.width = width_substrate
+	end.delta = 1.445-background_index
+	mat_name = ThermalOxide_Sellmeier
+end segment
+
+segment 3
+	combine_mode = COMBINE_MERGE
+	priority = 1
+	draw_priority = 1
+	color = 15
+	tags = Group=3
+	extended = 1
+	arc_type = ARC_SBEND
+	begin.x = 0 rel begin segment 2
+	begin.y = 2.5+thick_teos+thick2_bpsg_reflown+thick_teos_asdep/2 rel begin segment 2
+	begin.z = 0
+	begin.height = thick_teos_asdep
+	begin.width = width_substrate
+	begin.delta = n_BPSG_as_dep-background_index
+	end.x = 0 rel begin segment 3
+	end.y = 0 rel begin segment 3
+	end.z = wg_length rel begin segment 3
+	end.height = thick_teos_asdep
+	end.width = width_substrate
+	end.delta = n_BPSG_as_dep-background_index
+	mat_name = TEOS_AsDep
+end segment
+
+segment 4
+	combine_mode = COMBINE_MERGE
+	priority = 2
+	draw_priority = 3
+	color = 11
+	tags = Group=3
+	extended = 1
+	arc_type = ARC_SBEND
+	begin.x = 0 rel begin segment 2
+	begin.y = 2.5+thick_teos+thick2_bpsg_reflown/2 rel begin segment 2
+	begin.z = 0
+	begin.height = thick2_bpsg_reflown
+	begin.width = width_substrate
+	begin.delta = n_BPSG_reflown-background_index
+	end.x = 0 rel begin segment 4
+	end.y = 0 rel begin segment 4
+	end.z = wg_length rel begin segment 4
+	end.height = thick2_bpsg_reflown
+	end.width = width_substrate
+	end.delta = n_BPSG_reflown-background_index
+	mat_name = BPSG_Reflow_Sellmeier
+end segment
+
+segment 5
+	priority = 3
+	draw_priority = 9
+	color = 1
+	tags = Group=3
+	extended = 1
+	arc_type = ARC_SBEND
+	begin.x = 0 rel begin segment 2
+	begin.y = thick_teos/2+2.5 rel begin segment 2
+	begin.z = 0
+	begin.height = thick_teos
+	begin.width = width_substrate
+	begin.delta = 1.4345-background_index
+	end.x = 0 rel begin segment 5
+	end.y = 0 rel begin segment 5
+	end.z = wg_length rel begin segment 5
+	end.height = thick_teos
+	end.width = width_substrate
+	end.delta = 1.4345-background_index
+	mat_name = SiO2_TEOS_Sellmeier
+end segment
+
+segment 6
+	priority = 5
+	draw_priority = 19
+	color = 4
+	sidewall_angle = wg_Angle
+	tags = Group=3
+	extended = 1
+	width_taper = TAPER_USER_1
+	arc_type = ARC_SBEND
+	begin.x = 0 rel begin segment 1
+	begin.y = -wgh/2+transition_layer_height/2 rel begin segment 1
+	begin.z = 0
+	begin.height = transition_layer_height
+	begin.width = 0
+	begin.delta = 1.445
+	end.x = 0 rel begin segment 6
+	end.y = 0 rel begin segment 6
+	end.z = wg_length rel begin segment 6
+	end.height = transition_layer_height
+	end.width = 1
+	end.delta = 1.445
+	mat_name = ThermalOxide_Sellmeier
+end segment
+
+segment 7
+	combine_mode = COMBINE_MERGE
+	color = 14
+	tags = Group=3
+	extended = 1
+	width_taper = TAPER_USER_1
+	arc_type = ARC_SBEND
+	begin.x = 0 rel begin segment 1
+	begin.y = wgh/2+thick_teos+thick1_bpsg_reflown+thick_teos_asdep+thick_pecvd/2 rel begin segment 1
+	begin.z = 0
+	begin.height = thick_pecvd
+	begin.width = -2*wgh*tan(wg_Angle)
+	begin.delta = n_BPSG_reflown-background_index
+	end.x = 0 rel begin segment 7
+	end.y = 0 rel begin segment 7
+	end.z = wg_length rel begin segment 7
+	end.height = thick_pecvd
+	end.width = 1-2*wgh*tan(wg_Angle)
+	end.delta = n_BPSG_reflown-background_index
+	mat_name = SiO2_PECVD_Sellmeier
+end segment
+
+segment 8
+	draw_priority = 1
+	color = 2
+	tags = Group=3
+	extended = 1
+	arc_type = ARC_SBEND
+	begin.x = 0 rel begin segment 2
+	begin.y = -thick_substrate/2-Si_h/2 rel end segment 2
+	begin.z = 0
+	begin.height = Si_h
+	begin.width = width_substrate
+	begin.delta = 1.445-background_index
+	end.x = 0 rel begin segment 8
+	end.y = 0 rel begin segment 8
+	end.z = wg_length rel begin segment 8
+	end.height = Si_h
+	end.width = width_substrate
+	end.delta = 1.445-background_index
+	mat_name = Si
+end segment
+
+segment 9
+	combine_mode = COMBINE_MERGE
+	color = 14
+	tags = Group=3
+	extended = 1
+	arc_type = ARC_SBEND
+	begin.x = 0 rel begin segment 2
+	begin.y = thick_teos_asdep/2+thick_pecvd/2 rel begin segment 3
+	begin.z = 0
+	begin.height = thick_pecvd
+	begin.width = width_substrate
+	begin.delta = n_BPSG_reflown-background_index
+	end.x = 0 rel begin segment 9
+	end.y = 0 rel begin segment 9
+	end.z = wg_length rel begin segment 9
+	end.height = thick_pecvd
+	end.width = width_substrate
+	end.delta = n_BPSG_reflown-background_index
+	mat_name = SiO2_PECVD_Sellmeier
+end segment
+
+segment 10
+	structure = STRUCT_FIBER
+	priority = 3
+	draw_priority = 9
+	color = 1
+	tags = Group=3
+	position_taper = TAPER_USER_1
+	arc_type = ARC_SBEND
+	begin.x = -2*wgh*tan(wg_Angle)/2
+	begin.y = (wgh)/2 rel begin segment 1
+	begin.z = 0
+	begin.height = 2*thick_teos
+	begin.width = 2*thick_teos
+	begin.delta = 1.445-background_index
+	end.x = (1-2*wgh*tan(wg_Angle))/2
+	end.y = 0 rel begin segment 10
+	end.z = wg_length rel begin segment 10
+	end.height = 2*thick_teos
+	end.width = 2*thick_teos
+	end.delta = 1.445-background_index
+	mat_name = SiO2_TEOS_Sellmeier
+end segment
+
+segment 11
+	combine_mode = COMBINE_MERGE
+	priority = 3
+	draw_priority = 9
+	color = 1
+	sidewall_angle = wg_Angle
+	tags = Group=3
+	extended = 1
+	width_taper = TAPER_USER_1
+	arc_type = ARC_SBEND
+	begin.x = 0 rel begin segment 1
+	begin.y = 0 rel begin segment 1
+	begin.z = 0
+	begin.height = wgh
+	begin.width = DeltaTeos
+	begin.delta = 1.528
+	end.x = 0 rel begin segment 11
+	end.y = 0 rel begin segment 11
+	end.z = wg_length rel begin segment 11
+	end.height = wgh
+	end.width = 1+DeltaTeos
+	end.delta = 1.528
+	mat_name = SiO2_TEOS_Sellmeier
+end segment
+
+segment 12
+	combine_mode = COMBINE_MERGE
+	priority = 3
+	draw_priority = 9
+	color = 1
+	tags = Group=3
+	extended = 1
+	width_taper = TAPER_USER_1
+	arc_type = ARC_SBEND
+	begin.x = 0 rel begin segment 1
+	begin.y = wgh/2+thick_teos/2 rel begin segment 1
+	begin.z = 0
+	begin.height = thick_teos
+	begin.width = -2*wgh*tan(wg_Angle)
+	begin.delta = 1.528
+	end.x = 0 rel begin segment 12
+	end.y = 0 rel begin segment 12
+	end.z = wg_length rel begin segment 12
+	end.height = thick_teos
+	end.width = 1-2*wgh*tan(wg_Angle)
+	end.delta = 1.528
+	mat_name = SiO2_TEOS_Sellmeier
+end segment
+
+segment 13
+	structure = STRUCT_FIBER
+	priority = 3
+	draw_priority = 9
+	color = 1
+	tags = Group=3
+	position_taper = TAPER_USER_1
+	arc_type = ARC_SBEND
+	begin.x = -2*wgh*tan(wg_Angle)
+	begin.y = (wgh)/2 rel begin segment 1
+	begin.z = 0
+	begin.height = 2*thick_teos
+	begin.width = 2*thick_teos
+	begin.delta = 1.445-background_index
+	end.x = (-1-2*wgh*tan(wg_Angle))/2
+	end.y = 0 rel begin segment 13
+	end.z = wg_length rel begin segment 13
+	end.height = 2*thick_teos
+	end.width = 2*thick_teos
+	end.delta = 1.445-background_index
+	mat_name = SiO2_TEOS_Sellmeier
+end segment
+
+segment 14
+	structure = STRUCT_FIBER
+	priority = 2
+	draw_priority = 6
+	color = 11
+	tags = Group=3
+	position_taper = TAPER_USER_1
+	arc_type = ARC_SBEND
+	begin.x = -2*wgh*tan(wg_Angle)
+	begin.y = (wgh)/2 rel begin segment 1
+	begin.z = 0
+	begin.height = 2*(thick1_bpsg_reflown+thick_teos)
+	begin.width = 2*(thick1_bpsg_reflown+thick_teos)
+	begin.delta = 1.445-background_index
+	end.x = (-1--2*wgh*tan(wg_Angle))/2
+	end.y = 0 rel begin segment 14
+	end.z = wg_length rel begin segment 14
+	end.height = 2*(thick1_bpsg_reflown+thick_teos)
+	end.width = 2*(thick1_bpsg_reflown+thick_teos)
+	end.delta = 1.445-background_index
+	mat_name = BPSG_Reflow_Sellmeier
+end segment
+
+segment 15
+	structure = STRUCT_FIBER
+	priority = 1
+	draw_priority = 1
+	color = 15
+	tags = Group=3
+	position_taper = TAPER_USER_1
+	arc_type = ARC_SBEND
+	begin.x = -2*wgh*tan(wg_Angle)
+	begin.y = (wgh)/2 rel begin segment 1
+	begin.z = 0
+	begin.height = 2*(thick_teos+thick1_bpsg_reflown+thick_teos_asdep)
+	begin.width = 2*(thick_teos+thick1_bpsg_reflown+thick_teos_asdep)
+	begin.delta = 1.445-background_index
+	end.x = (-1-2*wgh*tan(wg_Angle))/2
+	end.y = 0 rel begin segment 15
+	end.z = wg_length rel begin segment 15
+	end.height = 2*(thick_teos+thick1_bpsg_reflown+thick_teos_asdep)
+	end.width = 2*(thick_teos+thick1_bpsg_reflown+thick_teos_asdep)
+	end.delta = 1.445-background_index
+	mat_name = TEOS_AsDep
+end segment
+
+segment 16
+	combine_mode = COMBINE_MERGE
+	priority = 2
+	draw_priority = 7
+	color = 11
+	tags = Group=3
+	extended = 1
+	width_taper = TAPER_USER_1
+	arc_type = ARC_SBEND
+	begin.x = 0 rel begin segment 1
+	begin.y = wgh/2+thick_teos+thick1_bpsg_reflown/2 rel begin segment 1
+	begin.z = 0
+	begin.height = thick1_bpsg_reflown
+	begin.width = -2*wgh*tan(wg_Angle)
+	begin.delta = n_BPSG_reflown-background_index
+	end.x = 0 rel begin segment 16
+	end.y = 0 rel begin segment 16
+	end.z = wg_length rel begin segment 16
+	end.height = thick1_bpsg_reflown
+	end.width = 1-2*wgh*tan(wg_Angle)
+	end.delta = n_BPSG_reflown-background_index
+	mat_name = BPSG_Reflow_Sellmeier
+end segment
+
+segment 17
+	structure = STRUCT_FIBER
+	priority = 1
+	draw_priority = 1
+	color = 15
+	tags = Group=3
+	position_taper = TAPER_USER_1
+	arc_type = ARC_SBEND
+	begin.x = -2*wgh*tan(wg_Angle)
+	begin.y = (wgh)/2 rel begin segment 1
+	begin.z = 0
+	begin.height = 2*(thick_teos+thick1_bpsg_reflown+thick_teos_asdep)
+	begin.width = 2*(thick_teos+thick1_bpsg_reflown+thick_teos_asdep)
+	begin.delta = 1.445-background_index
+	end.x = (1-2*wgh*tan(wg_Angle))/2
+	end.y = 0 rel begin segment 17
+	end.z = wg_length rel begin segment 17
+	end.height = 2*(thick_teos+thick1_bpsg_reflown+thick_teos_asdep)
+	end.width = 2*(thick_teos+thick1_bpsg_reflown+thick_teos_asdep)
+	end.delta = 1.445-background_index
+	mat_name = TEOS_AsDep
+end segment
+
+segment 18
+	combine_mode = COMBINE_MERGE
+	priority = 1
+	draw_priority = 1
+	color = 15
+	tags = Group=3
+	extended = 1
+	width_taper = TAPER_USER_1
+	arc_type = ARC_SBEND
+	begin.x = 0 rel begin segment 1
+	begin.y = wgh/2+thick_teos+thick1_bpsg_reflown+thick_teos_asdep/2 rel begin segment 1
+	begin.z = 0
+	begin.height = thick_teos_asdep
+	begin.width = -2*wgh*tan(wg_Angle)
+	begin.delta = n_BPSG_as_dep-background_index
+	end.x = 0 rel begin segment 18
+	end.y = 0 rel begin segment 18
+	end.z = wg_length rel begin segment 18
+	end.height = thick_teos_asdep
+	end.width = 1-2*wgh*tan(wg_Angle)
+	end.delta = n_BPSG_as_dep-background_index
+	mat_name = TEOS_AsDep
+end segment
+
+segment 19
+	structure = STRUCT_FIBER
+	color = 14
+	tags = Group=3
+	position_taper = TAPER_USER_1
+	arc_type = ARC_SBEND
+	begin.x = -2*wgh*tan(wg_Angle)
+	begin.y = (wgh)/2 rel begin segment 1
+	begin.z = 0
+	begin.height = 2*(thick_teos+thick1_bpsg_reflown+thick_teos_asdep+thick_pecvd)
+	begin.width = 2*(thick_teos+thick1_bpsg_reflown+thick_teos_asdep+thick_pecvd)
+	begin.delta = 1.445-background_index
+	end.x = (-1-2*wgh*tan(wg_Angle))/2
+	end.y = 0 rel begin segment 19
+	end.z = wg_length rel begin segment 19
+	end.height = 2*(thick_teos+thick1_bpsg_reflown+thick_teos_asdep+thick_pecvd)
+	end.width = 2*(thick_teos+thick1_bpsg_reflown+thick_teos_asdep+thick_pecvd)
+	end.delta = 1.445-background_index
+	mat_name = SiO2_PECVD_Sellmeier
+end segment
+
+segment 20
+	structure = STRUCT_FIBER
+	color = 14
+	tags = Group=3
+	position_taper = TAPER_USER_1
+	arc_type = ARC_SBEND
+	begin.x = -2*wgh*tan(wg_Angle)
+	begin.y = (wgh)/2 rel begin segment 1
+	begin.z = 0
+	begin.height = 2*(thick_teos+thick1_bpsg_reflown+thick_teos_asdep+thick_pecvd)
+	begin.width = 2*(thick_teos+thick1_bpsg_reflown+thick_teos_asdep+thick_pecvd)
+	begin.delta = 1.445-background_index
+	end.x = (1-2*wgh*tan(wg_Angle))/2
+	end.y = 0 rel begin segment 20
+	end.z = wg_length rel begin segment 20
+	end.height = 2*(thick_teos+thick1_bpsg_reflown+thick_teos_asdep+thick_pecvd)
+	end.width = 2*(thick_teos+thick1_bpsg_reflown+thick_teos_asdep+thick_pecvd)
+	end.delta = 1.445-background_index
+	mat_name = SiO2_PECVD_Sellmeier
+end segment
+
+segment 21
+	structure = STRUCT_FIBER
+	priority = 2
+	draw_priority = 8
+	color = 11
+	tags = Group=3
+	position_taper = TAPER_USER_1
+	arc_type = ARC_SBEND
+	begin.x = -2*wgh*tan(wg_Angle)
+	begin.y = (wgh)/2 rel begin segment 1
+	begin.z = 0
+	begin.height = 2*(thick1_bpsg_reflown+thick_teos)
+	begin.width = 2*(thick1_bpsg_reflown+thick_teos)
+	begin.delta = 1.445-background_index
+	end.x = (1-2*wgh*tan(wg_Angle))/2
+	end.y = 0 rel begin segment 21
+	end.z = wg_length rel begin segment 21
+	end.height = 2*(thick1_bpsg_reflown+thick_teos)
+	end.width = 2*(thick1_bpsg_reflown+thick_teos)
+	end.delta = 1.445-background_index
+	mat_name = BPSG_Reflow_Sellmeier
+end segment
+
+
+pathway 1
+	11
+end pathway
+
+
+monitor 1
+	pathway = 0
+	monitor_type = Monitor
+	monitor_tilt = 1
+	monitor_component = COMPONENT_BOTH
+	monitor_file = $ModeName
+end monitor
+
+
+launch_field 1
+	launch_pathway = 0
+	launch_type = LAUNCH_WGMODE
+	launch_position = 0
+	launch_position_y = 0
+end launch_field
+
+
+text_block 1
+	name = MOST
+	text =
+RSScanOptFormat1
+
+[MODE] 
+SCAN
+
+PREFIX POWERvsL_taperconversion
+PREFIX_STYLE 0
+CLUSTER 0 0 0 0 1 ""
+USERSIM_CALLSTYLE 0 0
+
+[SIMULATION]
+SIMTOOL ST_BEAMPROP 
+WINDOW_SIZE 0
+VERBOSITY 0
+PRE_WHOLE_CMD 
+POST_WHOLE_CMD 
+PRE_CMD 
+POST_CMD 
+PREPOST_ACTIVE 0
+PREPOST_ERRCODES 0
+EXTRA_DATAINDEX_CMDS 
+
+[ALGORITHM]
+NAME root_1d_brent
+MAXSTEPS DEFAULT  1000
+CONVERGENCE DEFAULT  1.0e-7
+
+[INDEPENDENT_VARIABLES_SCAN]
+IV_Declarations
+SYMTAB_SCALAR launch_position_y N :  IV_LINEAR_STEPS : -4 : 4 : 0.267 : 31 :  :  :
+SYMTAB_SCALAR launch_position N :  IV_LINEAR_STEPS : -4 : 4 : 0.267 : 31 :  :  :
+SYMTAB_SCALAR wg_length Y :  IV_LINEAR_STEPS : 10 : 1960 : 50 : 40 :  :  :
+
+[INDEPENDENT_VARIABLES_OPT]
+IV_Declarations
+
+IV_InitialValues
+
+[MEASUREMENTS:ST_BEAMPROP]
+STANDARD bp_mon_1 Y 
+STANDARD bp_mon_1_last Y 
+
+[MEASUREMENTS:ST_USER]
+USER bp_biref N SCALAR FILE biref.py [0,0] 'Measure of the Birefringence'
+USER bp_biref1 Y SCALAR FILE <prefix>.biref [0,0] 'Birefringence of fiber modes'
+
+[MEASUREMENTS:ST_BEAMPROP_MODESOLVE]
+STANDARD bp_mode3d_m00 Y 
+
+[METRICS]
+
+	end text
+end text_block
+
+text_block 2
+	name = ComponentFilters
+	text =
+filter = Group1
+definition = tags=1
+end filter
+filter = Group2
+definition = tags=2
+end filter
+filter = Group3
+definition = tags=3
+end filter
+filter = Group4
+definition = tags=4
+end filter
+filter = Group5
+definition = tags=5
+end filter
+filter = Group6
+definition = tags=6
+end filter
+	end text
+end text_block
+

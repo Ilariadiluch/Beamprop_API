@@ -1,0 +1,19 @@
+Message: NZ=1726, NX=601, NY=501, Estimated Time = 2.002 min
+setting KMP_AFFINITY=nowarnings,explicit,proclist=[11,10,9,8,7,6,5,4,3,2,1,0]
+setting KMP_AFFINITY=nowarnings,explicit,proclist=[11,10,9,8,7,6,5,4,3,2,1,0]
+Message: NZ=1726, NX=601, NY=501, Estimated Time = 2.002 min
+Error: can't open user data file MODE/TEMODE_ex.m00.
+setting KMP_AFFINITY=nowarnings,explicit,proclist=[11,10,9,8,7,6,5,4,3,2,1,0]
+setting KMP_AFFINITY=nowarnings,explicit,proclist=[11,10,9,8,7,6,5,4,3,2,1,0]
+Message: NZ=1726, NX=601, NY=501, Estimated Time = 2.002 min
+Error: can't open user data file MODE/TEMODE_ex.m00.
+setting KMP_AFFINITY=nowarnings,explicit,proclist=[11,10,9,8,7,6,5,4,3,2,1,0]
+setting KMP_AFFINITY=nowarnings,explicit,proclist=[11,10,9,8,7,6,5,4,3,2,1,0]
+Message: NZ=1726, NX=601, NY=501, Estimated Time = 2.002 min
+Error: can't open user data file MODE/TEMODE_ex.m00.
+setting KMP_AFFINITY=nowarnings,explicit,proclist=[11,10,9,8,7,6,5,4,3,2,1,0]
+setting KMP_AFFINITY=nowarnings,explicit,proclist=[11,10,9,8,7,6,5,4,3,2,1,0]
+Message: Actual Computation Time = 0.443 min
+setting KMP_AFFINITY=nowarnings,explicit,proclist=[11,10,9,8,7,6,5,4,3,2,1,0]
+setting KMP_AFFINITY=nowarnings,explicit,proclist=[11,10,9,8,7,6,5,4,3,2,1,0]
+Message: Actual Computation Time = 0.439 min
